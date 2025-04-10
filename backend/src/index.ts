@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response }  from 'express';
 import dotenv from 'dotenv';
 import { pool } from './db';
 
@@ -9,11 +9,11 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('🚀 API Pedistan corriendo');
 });
 
-app.get('/health', async (_req, res) => {
+app.get('/health', async (_req: Request, res: Response) => {
   try {
     const client = await pool.connect();
     await client.query('SELECT NOW()');
