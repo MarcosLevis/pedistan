@@ -3,9 +3,9 @@ import config from "./config"
 
 
 export const sequelize = new Sequelize({
-    ...config.getDataBaseConfig(),
+   ...config.getDataBaseConfig(),
     dialect: "postgres",
-    models: [__dirname+"/models"]
+    models: [__dirname + "/../models"]
 })
 
 export async function connectDB(): Promise<void> {
@@ -17,5 +17,3 @@ export async function connectDB(): Promise<void> {
       process.exit(1);  // detiene la app si falla la conexión
     }
 }
-
-
