@@ -13,10 +13,12 @@ app.use(cors())
 app.use(express.json())
 app.use(router)
 
-//esto es del hindu
+//esto es para testear que la conexion este hecha
 connectDB()
 //esto sincrniza las tablas con los modelos,  This creates the tables if it doesn't exist (and does nothing if it already exists)
-sequelize.sync() 
+sequelize.sync()
+//este te pisa todo no le cabe una
+//sequelize.sync({force: true}) 
 
 app.listen(PORT, () => console.log(`Listo por el puerto ${PORT}`))
 

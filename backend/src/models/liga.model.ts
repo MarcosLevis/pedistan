@@ -1,5 +1,5 @@
 import { Optional } from "sequelize"
-import {Model, Column, Table, DataType, CreatedAt, UpdatedAt, PrimaryKey} from "sequelize-typescript";
+import {Model, Column, Table, DataType, CreatedAt, UpdatedAt, PrimaryKey, AutoIncrement} from "sequelize-typescript";
 import { ILiga } from "../interfaces/liga.interface";
 
 // vamos a hacer la DEFINICION MAS RESTRICTIVA en typescript
@@ -14,16 +14,20 @@ interface LigaCreationAttributes extends Optional<ILiga,"id">{}
     modelName: "Liga"
 })
 
-export default class Liga extends Model<ILiga,LigaCreationAttributes>{
+export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
     @Column({
         primaryKey: true,
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
+        type: DataType.INTEGER,
+        autoIncrement: true
+        //esta forma de UUID no me gusto mucho para esta app
+        // type: DataType.UUID,
+        // defaultValue: DataType.UUIDV4,
     })
-    declare id: string;
+    declare id: number;
 
     @Column({
         type: DataType.STRING,
+        allowNull: false,
     })
     declare nombre: string
 
