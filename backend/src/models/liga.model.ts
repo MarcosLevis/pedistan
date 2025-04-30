@@ -5,7 +5,7 @@ import { ILiga } from "../interfaces/liga.interface";
 // vamos a hacer la DEFINICION MAS RESTRICTIVA en typescript
 
 //esto le dice a typescript que la id de la interfaz es opcional
-//y cuando no la ponemos al crear un objeto sequelize la pone automanticamente
+//y cuando no la ponemos al crear un objeto sequelize la pone automaticamente
 interface LigaCreationAttributes extends Optional<ILiga,"id">{}
 
 @Table({
@@ -19,7 +19,7 @@ export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
         primaryKey: true,
         type: DataType.INTEGER,
         autoIncrement: true
-        //esta forma de UUID no me gusto mucho para esta app
+        //esta forma de UUID no me gusto mucho para esta app:
         // type: DataType.UUID,
         // defaultValue: DataType.UUIDV4,
     })

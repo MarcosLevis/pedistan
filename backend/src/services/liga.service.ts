@@ -1,12 +1,46 @@
 import { ILiga } from "../interfaces/liga.interface"
 import LigaModel from "../models/liga.model"
 
-export const listLigas = async () => {
-    const responseInsert = await LigaModel.findAll()
-    return responseInsert;
+export const GetLigas = async () => {
+    const response = await LigaModel.findAll()
+    return response;
 }
-export const createLiga = async (liga: ILiga) => {
-    const responseInsert = await LigaModel.create(liga)
-    return responseInsert;
+export const GetLigaById = async(id: string) => {
+    const response = await LigaModel.findByPk(id)
+    return response;
 }
+export const CreateLiga = async (liga: ILiga) => {
+    const response = await LigaModel.create(liga)
+    return response;
+}
+
+export const UpdateLiga = async (id: string, data: ILiga) => {
+    try {
+        const liga = await LigaModel.findByPk(id);
+        if (!liga) {
+            return null;
+        }
+        const response = await liga.update(data);
+        return response;
+    } catch (error) {
+        console.error("Error al actualizar la liga en el service:", error);
+        throw error;
+    }
+}
+
+export const DeleteLiga = async (id: string) => {
+    try {
+        const liga = await LigaModel.findByPk(id);
+        if (!liga) {
+            return null;
+        }
+        const response = await liga.destroy();
+        return response;
+    } catch (error) {
+        console.error("Error al eliminar la liga en el service:", error);
+        throw error;
+    }
+}
+
+
 

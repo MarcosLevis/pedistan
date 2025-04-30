@@ -1,25 +1,54 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { createLiga, listLigas } from "../services/liga.service"
+import { CreateLiga, GetLigas, GetLigaById, UpdateLiga, DeleteLiga } from "../services/liga.service"
 
 
-const getLigas = async (req:Request, res:Response) => {
+export const getLigas = async (req:Request, res:Response) => {
   try{
-    const response = await listLigas()
-    res.send(response)
+    const response = await GetLigas()
+    const data = response ? response : "No existen Ligas"
+    res.send(data)
   }catch(e){
-      handleHttp(res, 'ERROR_GET_LIGA',e)
+      handleHttp(res, 'ERROR_GET_LIGAS',e)
   }
 }
 
-const postLiga = async ({body}: Request, res:Response) => {
+export const getLigaById = async({ params }:Request,res:Response) => {
   try{
-    const responseLiga = await createLiga(body)
-    res.send(responseLiga)
+    const { id } = params;
+    const response = await GetLigaById(id)
+    const data = response ? response : "No existe esa Liga"
+    res.send(data)
+  }catch(e){
+    handleHttp(res, 'ERROR_GET_LIGA',e)
+  }
+}
+
+export const updateLiga = async({ params, body }:Request,res:Response) => {
+  try{
+    const { id } = params;
+    const response = await UpdateLiga(id,body)
+    res.send(response)
+  }catch(e){
+    handleHttp(res, 'ERROR_UPDATE_LIGA',e)
+  }
+}
+
+export const postLiga = async ({body}: Request, res:Response) => {
+  try{
+    const response = await CreateLiga(body)
+    res.send(response)
   }catch(e){
       handleHttp(res, 'ERROR_POST_LIGA', e)
   }
 }
 
-
-export {getLigas, postLiga}
+export const deleteLiga = async({ params }:Request,res:Response) => {
+  try{
+    const { id } = params;
+    const response = await DeleteLiga(id)
+    res.send(response)
+  }catch(e){
+    handleHttp(res, 'ERROR_DELETE_LIGA',e)
+  }
+}
