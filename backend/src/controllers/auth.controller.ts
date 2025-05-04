@@ -15,7 +15,7 @@ export const login = async ({body}:Request, res:Response) => {
     try{
         const {email, password } = body
         const response = await Login({email, password })
-        if (response == 'DATOS_INVALIDOS_b'){
+        if (response == 'DATOS_INVALIDOS_B'){
             res.status(403)
         }
         res.send(response)

@@ -2,6 +2,7 @@ import UserModel from "../models/user.model"
 import { IUser } from '../interfaces/user.interface';
 import { IAuth } from "../interfaces/auth.interface";
 import { encrypt, verified } from "../utils/bcrypt.handle";
+import { generateToken } from "../utils/jwt.handle";
 
 export const Register = async ({nombre, email, password, foto, descripcion}: IUser) => {
     
@@ -25,7 +26,12 @@ export const Login = async ({email, password}: IAuth) => {
     const passHash = user.password
     const valida = await verified(password,passHash)
 
-    return valida ? user : 'DATOS_INVALIDOS_b'
+    if (!valida) return 'DATOS_INVALIDOS_B'
+
+    const token = generateToken(user.email)
+    const data = {token, user: user}
+    return data
+    
 }
 
 const FindUserByEmail = async (email: string) => {
