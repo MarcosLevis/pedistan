@@ -21,3 +21,5 @@ https://www.youtube.com/watch?v=T1QFGwOnQxQ
 - Proteger rutas que solo se accedan bajo token de sesion
 - Proteger rutas por roles
 - etc
+
+9. instalamos paquetees de encripato y jwt (bcryptsjs, jsonwebtoken)

@@ -1,6 +1,8 @@
 import { ILiga } from "../interfaces/liga.interface"
 import LigaModel from "../models/liga.model"
 
+//LA LOGICA DE NEGOCIO VA EN EL SERVICE NO EN EL CONTROLER
+
 export const GetLigas = async () => {
     const response = await LigaModel.findAll()
     return response;
