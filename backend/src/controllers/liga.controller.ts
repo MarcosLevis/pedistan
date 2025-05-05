@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
 import { CreateLiga, GetLigas, GetLigaById, UpdateLiga, DeleteLiga } from "../services/liga.service"
+import { IRequestExtendida } from "../interfaces/req.interface"
 
 
 export const getLigas = async (req:Request, res:Response) => {
@@ -24,11 +25,15 @@ export const getLigaById = async({ params }:Request,res:Response) => {
   }
 }
 
-export const updateLiga = async({ params, body }:Request,res:Response) => {
+
+export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Response) => {
   try{
     const { id } = params;
     const response = await UpdateLiga(id,body)
-    res.send(response)
+    res.send({
+      data: response,
+      user: user
+    })
   }catch(e){
     handleHttp(res, 'ERROR_UPDATE_LIGA',e)
   }

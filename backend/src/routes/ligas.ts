@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { getLigas, postLiga,getLigaById,updateLiga, deleteLiga } from "../controllers/liga.controller";
 import { logMiddleware } from "../middleware/log";
+import { checkJWT } from '../middleware/session';
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
 
 router.get("/", getLigas);
 router.get("/:id",logMiddleware,getLigaById)
-router.put("/:id",updateLiga)
+router.put("/:id",checkJWT, updateLiga)
 router.post("/", postLiga);
 router.delete("/:id", deleteLiga)
 
