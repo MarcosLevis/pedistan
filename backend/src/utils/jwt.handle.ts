@@ -1,8 +1,9 @@
-import { sign, verify} from "jsonwebtoken"
+import {sign, verify} from "jsonwebtoken"
+import { JwtPayloadExtendida } from "../interfaces/jwt.interface"
 
 const JWT = process.env.JWT || "tokencitofalso"
 
-export const generateToken = (id: string) => {
+export const generateToken = (id: number) => {
     const jwt = sign({ id }, JWT, {
         expiresIn: "2h"
     })
@@ -10,6 +11,10 @@ export const generateToken = (id: string) => {
 }
 
 export const verifyToken = (jwt: string) => {
-    const valido = verify(jwt, JWT)
-    return valido
+    try {
+        const decoded = verify(jwt, JWT) as JwtPayloadExtendida;
+        return decoded;        
+    } catch (error) {
+        console.error('Error al verificar el token:', error);
+    }
 }

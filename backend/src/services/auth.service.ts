@@ -28,7 +28,7 @@ export const Login = async ({email, password}: IAuth) => {
 
     if (!valida) return 'DATOS_INVALIDOS_B'
 
-    const token = generateToken(user.email)
+    const token = generateToken(user.id)
     const data = {token, user: user}
     return data
     

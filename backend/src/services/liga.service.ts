@@ -1,5 +1,7 @@
+import { JwtPayloadExtendida } from "../interfaces/jwt.interface";
 import { ILiga } from "../interfaces/liga.interface"
 import LigaModel from "../models/liga.model"
+import LigaAdministradorModel from "../models/liga_administrador.model";
 
 //LA LOGICA DE NEGOCIO VA EN EL SERVICE NO EN EL CONTROLER
 
@@ -11,8 +13,13 @@ export const GetLigaById = async(id: string) => {
     const response = await LigaModel.findByPk(id)
     return response;
 }
-export const CreateLiga = async (liga: ILiga) => {
-    const response = await LigaModel.create(liga)
+export const CreateLiga = async (liga: ILiga, user: JwtPayloadExtendida) => {
+    const ligaCreada = await LigaModel.create(liga)
+    const nuevoAdministrador = await LigaAdministradorModel.create({
+        user_id: user.id,
+        liga_id: ligaCreada.id,
+      });   
+    const response = ligaCreada    
     return response;
 }
 

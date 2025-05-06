@@ -39,14 +39,16 @@ export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Res
   }
 }
 
-export const postLiga = async ({body}: Request, res:Response) => {
+export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) => {
   try{
-    const response = await CreateLiga(body)
+    const response = await CreateLiga(body, user!)
     res.send(response)
   }catch(e){
       handleHttp(res, 'ERROR_POST_LIGA', e)
   }
 }
+
+
 
 export const deleteLiga = async({ params }:Request,res:Response) => {
   try{

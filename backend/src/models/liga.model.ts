@@ -1,6 +1,8 @@
 import { Optional } from "sequelize"
-import {Model, Column, Table, DataType, CreatedAt, UpdatedAt, PrimaryKey, AutoIncrement} from "sequelize-typescript";
+import {Model, Column, Table, DataType, CreatedAt, UpdatedAt, BelongsToMany, HasMany} from "sequelize-typescript";
 import { ILiga } from "../interfaces/liga.interface";
+import UserModel from "./user.model";
+import LigaAdministradorModel from "./liga_administrador.model";
 
 // vamos a hacer la DEFINICION MAS RESTRICTIVA en typescript
 
@@ -14,7 +16,8 @@ interface LigaCreationAttributes extends Optional<ILiga,"id">{}
     modelName: "Liga"
 })
 
-export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
+export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{    
+    
     @Column({
         primaryKey: true,
         type: DataType.INTEGER,
@@ -24,18 +27,44 @@ export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
         // defaultValue: DataType.UUIDV4,
     })
     declare id: number;
-
+    
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     declare nombre: string
-
+    
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare juego: string
+    
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare descripcion: string
+    
     @CreatedAt
     declare created_at:Date
-
+    
     @UpdatedAt
-    declare updated_at: Date
+    declare updated_at: Date    
+
+
+
+
+    @BelongsToMany(() => UserModel, {
+        through: { model: () => LigaAdministradorModel },
+    })
+    administradores!: UserModel[];
+    
+    @HasMany(() => LigaAdministradorModel, {
+        onDelete: "CASCADE",
+    })
+    ligaAdministradorEntries!: LigaAdministradorModel[];
+
 }
 
 
