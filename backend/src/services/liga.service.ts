@@ -1,3 +1,4 @@
+import { sequelize } from "../database/postgres";
 import { JwtPayloadExtendida } from "../interfaces/jwt.interface";
 import { ILiga } from "../interfaces/liga.interface"
 import LigaModel from "../models/liga.model"
@@ -13,21 +14,25 @@ export const GetLigaById = async(id: string) => {
     const response = await LigaModel.findByPk(id)
     return response;
 }
+
+
 export const CreateLiga = async (liga: ILiga, user: JwtPayloadExtendida) => {
-    const ligaCreada = await LigaModel.create(liga)
-    const nuevoAdministrador = await LigaAdministradorModel.create({
-        user_id: user.id,
-        liga_id: ligaCreada.id,
-      });   
-    const response = ligaCreada    
-    return response;
+        const result = await sequelize.transaction(async (t) => {
+            const ligaCreada = await LigaModel.create(liga, { transaction: t })
+            const nuevoAdministrador = await LigaAdministradorModel.create({
+                user_id: user.id,
+                liga_id: ligaCreada.id,
+            },{ transaction: t }); 
+            return ligaCreada    
+        })
+        return result
 }
 
 export const UpdateLiga = async (id: string, data: ILiga) => {
     try {
         const liga = await LigaModel.findByPk(id);
         if (!liga) {
-            return null;
+            return "No existe esa liga";
         }
         const response = await liga.update(data);
         return response;

@@ -7,7 +7,7 @@ export const register = async ({body}:Request, res:Response) => {
         const response = await Register(body)
         res.send(response)
     }catch(e){
-        handleHttp(res, 'ERROR_POST_REGISTER', e)
+        handleHttp(res, 'Error al registrar un usuario: ', e)
     }
 }
 
@@ -15,11 +15,11 @@ export const login = async ({body}:Request, res:Response) => {
     try{
         const {email, password } = body
         const response = await Login({email, password })
-        if (response == 'DATOS_INVALIDOS_B'){
+        if (response == 'Datos de inicio de sesion binvalidos'){
             res.status(403)
         }
         res.send(response)
     }catch(e){
-        handleHttp(res, 'ERROR_POST_LOGIN', e)
+        handleHttp(res, 'Error al iniciar sesion: ', e)
     }    
 }

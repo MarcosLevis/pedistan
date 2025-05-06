@@ -10,18 +10,18 @@ export const getLigas = async (req:Request, res:Response) => {
     const data = response ? response : "No existen Ligas"
     res.send(data)
   }catch(e){
-      handleHttp(res, 'ERROR_GET_LIGAS',e)
+      handleHttp(res, 'Error al listar las Ligas: ',e)
   }
 }
 
-export const getLigaById = async({ params }:Request,res:Response) => {
+export const getLigaById = async (req:Request,res:Response) => {
   try{
-    const { id } = params;
+    const { id } = req.params;
     const response = await GetLigaById(id)
     const data = response ? response : "No existe esa Liga"
     res.send(data)
   }catch(e){
-    handleHttp(res, 'ERROR_GET_LIGA',e)
+    handleHttp(res, 'Error al listar una Liga: ',e)
   }
 }
 
@@ -35,7 +35,7 @@ export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Res
       user: user
     })
   }catch(e){
-    handleHttp(res, 'ERROR_UPDATE_LIGA',e)
+    handleHttp(res, 'Error al actualizar una Liga: ',e)
   }
 }
 
@@ -44,7 +44,7 @@ export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) 
     const response = await CreateLiga(body, user!)
     res.send(response)
   }catch(e){
-      handleHttp(res, 'ERROR_POST_LIGA', e)
+      handleHttp(res, 'Error al crear una Liga: ', e)
   }
 }
 
@@ -56,6 +56,6 @@ export const deleteLiga = async({ params }:Request,res:Response) => {
     const response = await DeleteLiga(id)
     res.send(response)
   }catch(e){
-    handleHttp(res, 'ERROR_DELETE_LIGA',e)
+    handleHttp(res, 'Error al eliminar una Liga: ',e)
   }
 }
