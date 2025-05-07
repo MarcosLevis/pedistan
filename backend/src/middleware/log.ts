@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+//Middleware TEST
 //NextFUnction es un argumento que permite seguir a ejecutar la siguiente funcion o no
 
 export const logMiddleware = (req: Request, res:Response, next: NextFunction) => { 

@@ -11,6 +11,6 @@ router.get("/", getLigas);
 router.get("/:id", getLigaById)
 router.post("/", checkJWT, postLiga);
 router.put("/:id", checkJWT, isLigaAdmin, updateLiga)
-router.delete("/:id", deleteLiga)
+router.delete("/:id", checkJWT, isLigaAdmin, deleteLiga)
 
 export { router };

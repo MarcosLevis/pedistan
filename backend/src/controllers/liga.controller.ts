@@ -3,7 +3,6 @@ import { handleHttp } from "../utils/error.handle"
 import { CreateLiga, GetLigas, GetLigaById, UpdateLiga, DeleteLiga } from "../services/liga.service"
 import { IRequestExtendida } from "../interfaces/req.interface"
 
-
 export const getLigas = async (req:Request, res:Response) => {
   try{
     const response = await GetLigas()
@@ -24,7 +23,6 @@ export const getLigaById = async (req:Request,res:Response) => {
     handleHttp(res, 'Error al listar una Liga: ',e)
   }
 }
-
 
 export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Response) => {
   try{
@@ -48,11 +46,9 @@ export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) 
   }
 }
 
-
-
-export const deleteLiga = async({ params }:Request,res:Response) => {
+export const deleteLiga = async(req:Request,res:Response) => {
   try{
-    const { id } = params;
+    const { id } = req.params;
     const response = await DeleteLiga(id)
     res.send(response)
   }catch(e){

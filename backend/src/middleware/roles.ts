@@ -10,12 +10,12 @@ export const isLigaAdmin = async (req: IRequestExtendida, res: Response, next: N
   
       if (!userId) {
         res.status(401)
-        res.send('USUARIO_NO_AUTENTICADO')
+        res.send('Usuario no autenticado')
       }
   
       if (!id || isNaN(parseInt(id, 10))) {
         res.status(400)
-        res.send('ID_LIGA_NO_VALIDO')
+        res.send('El id de la liga no es valido')
       }
       const ligaId = parseInt(id, 10);
         
@@ -39,6 +39,6 @@ export const isLigaAdmin = async (req: IRequestExtendida, res: Response, next: N
       next(); // El usuario es administrador, continuar
     } catch (error) {
         console.error("Error en middleware isLigaAdmin:", error);
-        res.status(500).json({ message: 'Error interno del servidor al verificar administración.' });
+        res.status(500).json({ message: 'Error interno del servidor al verificar administrador.' });
     }
   };
