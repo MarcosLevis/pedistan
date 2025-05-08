@@ -24,6 +24,16 @@ export const getLigaById = async (req:Request,res:Response) => {
   }
 }
 
+export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) => {
+  try{
+    const response = await CreateLiga(body, user!)
+    res.send(response)
+  }catch(e){
+      handleHttp(res, 'Error al crear una Liga: ', e)
+  }
+}
+
+
 export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Response) => {
   try{
     const { id } = params;
@@ -37,14 +47,6 @@ export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Res
   }
 }
 
-export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) => {
-  try{
-    const response = await CreateLiga(body, user!)
-    res.send(response)
-  }catch(e){
-      handleHttp(res, 'Error al crear una Liga: ', e)
-  }
-}
 
 export const deleteLiga = async(req:Request,res:Response) => {
   try{

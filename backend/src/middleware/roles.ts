@@ -6,9 +6,9 @@ import LigaAdministradorModel from "../models/liga_administrador.model";
 export const isLigaAdmin = async (req: IRequestExtendida, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const userId = req.user?.id;
+      const user_id = req.user?.id;
   
-      if (!userId) {
+      if (!user_id) {
         res.status(401)
         res.send('Usuario no autenticado')
       }
@@ -17,18 +17,18 @@ export const isLigaAdmin = async (req: IRequestExtendida, res: Response, next: N
         res.status(400)
         res.send('El id de la liga no es valido')
       }
-      const ligaId = parseInt(id, 10);
+      const liga_id = parseInt(id, 10);
         
       // Opcional: Verificar primero si la liga existe
-      const liga = await LigaModel.findByPk(ligaId);
+      const liga = await LigaModel.findByPk(liga_id);
       if (liga) {
         req.liga = liga; // Adjuntar la liga al request para uso en el controlador
       }
   
       const adminEntry = await LigaAdministradorModel.findOne({
         where: {
-          liga_id: ligaId,
-          user_id: userId
+          liga_id: liga_id,
+          user_id: user_id
         }
       });
   

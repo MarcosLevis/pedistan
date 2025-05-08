@@ -43,7 +43,7 @@ export const UpdateLiga = async (id: string, data: ILiga) => {
 export const DeleteLiga = async (id: string) => {   
     const liga = await LigaModel.findByPk(id);
     if (!liga) {
-        return null;
+        return "No existe esa liga";
     }
     const response = await sequelize.transaction(async (t) => {
         const ligaEliminada = await liga.destroy({ transaction: t });

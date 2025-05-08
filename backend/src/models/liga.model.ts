@@ -3,6 +3,7 @@ import {Model, Column, Table, DataType, CreatedAt, UpdatedAt, BelongsToMany, Has
 import { ILiga } from "../interfaces/liga.interface";
 import UserModel from "./user.model";
 import LigaAdministradorModel from "./liga_administrador.model";
+import TorneoModel from "./torneo.model";
 
 // vamos a hacer la DEFINICION MAS RESTRICTIVA en typescript
 
@@ -50,9 +51,7 @@ export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
     declare created_at:Date
     
     @UpdatedAt
-    declare updated_at: Date    
-
-
+    declare updated_at: Date
 
 
     @BelongsToMany(() => UserModel, {
@@ -64,6 +63,9 @@ export default class LigaModel extends Model<ILiga,LigaCreationAttributes>{
         onDelete: "CASCADE",
     })
     ligaAdministradorEntries!: LigaAdministradorModel[];
+
+    @HasMany(() => TorneoModel) // Una liga tiene muchos torneos
+    declare torneos: TorneoModel[];
 
 }
 
