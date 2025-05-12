@@ -16,7 +16,7 @@ export const GetTorneoById = async(id: string) => {
 export const CreateTorneo = async (torneo: ITorneo) => {
     const liga = await LigaModel.findByPk(torneo.liga_id)
     if (!liga){
-        return "No existe esa liga"
+        return `No existe la Liga con id: ${torneo.liga_id}`
     }
     const response = await sequelize.transaction(async (t) => {
         const torneoCreado = await TorneoModel.create(torneo, { transaction: t })
@@ -28,7 +28,7 @@ export const CreateTorneo = async (torneo: ITorneo) => {
 export const UpdateTorneo = async (id: string, data: ITorneo) => { 
     const torneo = await TorneoModel.findByPk(id);
     if (!torneo) {
-        return "No existe ese Torneo";
+        return `No existe el Torneo con id: ${id} `;
     }
     const response = await sequelize.transaction(async (t) => {
         const torneoActualizado = await torneo.update(data,{ transaction: t });
@@ -40,7 +40,7 @@ export const UpdateTorneo = async (id: string, data: ITorneo) => {
 export const DeleteTorneo = async (id: string) => {   
     const torneo = await TorneoModel.findByPk(id);
     if (!torneo) {
-        return "No existe ese Torneo";
+        return `No existe el Torneo con id: ${id} `;
     }
     const response = await sequelize.transaction(async (t) => {
         const torneoEliminado = await torneo.destroy({ transaction: t });

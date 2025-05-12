@@ -33,7 +33,6 @@ export const postLiga = async ({ body, user }: IRequestExtendida, res:Response) 
   }
 }
 
-
 export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Response) => {
   try{
     const { id } = params;
@@ -46,7 +45,6 @@ export const updateLiga = async({ params, body, user }:IRequestExtendida,res:Res
     handleHttp(res, 'Error al actualizar una Liga: ',e)
   }
 }
-
 
 export const deleteLiga = async(req:Request,res:Response) => {
   try{

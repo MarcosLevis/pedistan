@@ -3,6 +3,8 @@ import { getTorneos, postTorneo,getTorneoById,updateTorneo, deleteTorneo } from 
 import { checkJWT } from '../middleware/session';
 import { isLigaAdmin } from "../middleware/roles";
 
+
+import { router as partidaRouter } from './partidas'; 
 // mergeParams: true permite acceder a los parámetros de la ruta padre (ej. :id de la liga)
 const router = Router({ mergeParams: true });
 
@@ -16,5 +18,7 @@ router.get("/:torneo_id", getTorneoById)
 router.post("/", checkJWT, isLigaAdmin, postTorneo);
 router.put("/:torneo_id", checkJWT, isLigaAdmin, updateTorneo)
 router.delete("/:torneo_id", checkJWT, isLigaAdmin, deleteTorneo)
+
+router.use('/:torneo_id/partidas', partidaRouter);
 
 export { router };

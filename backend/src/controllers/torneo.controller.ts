@@ -3,8 +3,6 @@ import { handleHttp } from "../utils/error.handle";
 import { IRequestExtendida } from "../interfaces/req.interface";
 import { CreateTorneo, DeleteTorneo, GetTorneoById, GetTorneos, UpdateTorneo } from "../services/torneo.service";
 
-
-
 export const getTorneos = async (req:Request, res: Response) => {
     try{
         const { id } = req.params
@@ -45,8 +43,6 @@ export const updateTorneo = async({ params, body }:IRequestExtendida,res:Respons
     handleHttp(res, 'Error al actualizar un Torneo: ',e)
   }
 }
-
-
 
 export const deleteTorneo = async(req:Request,res:Response) => {
   try{

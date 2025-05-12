@@ -1,7 +1,8 @@
 import { Optional } from "sequelize";
-import { Model, Column, Table, DataType, ForeignKey, BelongsTo, CreatedAt, UpdatedAt } from "sequelize-typescript";
+import { Model, Column, Table, DataType, ForeignKey, BelongsTo, CreatedAt, UpdatedAt, HasMany } from "sequelize-typescript";
 import { ITorneo } from "../interfaces/torneo.interface";
 import LigaModel from "./liga.model";
+import PartidaModel from "./partida.model";
 
 interface TorneoCreationAttributes extends Optional<ITorneo, "id"> {}
 
@@ -54,6 +55,9 @@ export default class TorneoModel extends Model<ITorneo, TorneoCreationAttributes
 
     @BelongsTo(() => LigaModel, 'liga_id') // Relación: Un torneo pertenece a una Liga
     declare liga: LigaModel;
+
+    @HasMany(() => PartidaModel) // Untorneo tiene muchas partidas
+    declare partidas: PartidaModel[];    
 
     @CreatedAt
     declare created_at: Date;
