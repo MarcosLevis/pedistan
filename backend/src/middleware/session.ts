@@ -8,7 +8,10 @@ export const checkJWT  = (req: IRequestExtendida, res: Response, next: NextFunct
         const jwt = jwtUser.split(' ').pop() //['bearer','jwt1111']
         const user = verifyToken(`${jwt}`) 
         req.user = user
-        next()
+        if (req.user === undefined || req.user === null) {
+            throw new Error();
+        }
+        next()            
    }catch(e){
         res.status(401)
         res.send('Sesion no valida')

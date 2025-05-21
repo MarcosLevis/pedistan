@@ -1,7 +1,9 @@
 import { Optional } from "sequelize";
-import { Model, Column, Table, DataType, ForeignKey, BelongsTo, CreatedAt, UpdatedAt } from "sequelize-typescript";
+import { Model, Column, Table, DataType, ForeignKey, BelongsTo, CreatedAt, UpdatedAt, BelongsToMany, HasMany } from "sequelize-typescript";
 import { IPartida } from "../interfaces/partida.interface";
 import TorneoModel from "./torneo.model";
+import JugadorModel from "./jugador.model";
+import PartidaJugadorModel from "./partida_jugador.model";
 
 interface PartidaCreationAttributes extends Optional<IPartida, "id"> {}
 
@@ -30,12 +32,11 @@ export default class PartidaModel extends Model<IPartida, PartidaCreationAttribu
     })
     declare fecha: Date;
 
-
     @Column({
-        type: DataType.STRING,
+        type: DataType.INTEGER,
         allowNull: true,
     })
-    declare ganador: number;
+    declare ganador_id: number;
 
     @ForeignKey(() => TorneoModel) // Clave foránea hacia Torneo
     @Column({
@@ -48,6 +49,15 @@ export default class PartidaModel extends Model<IPartida, PartidaCreationAttribu
 
     @BelongsTo(() => TorneoModel, 'torneo_id') // Relación: Una partida pertenece a un torneo
     declare torneo: TorneoModel;
+
+    // Relación: Una partida tiene muchas participaciones de jugadores (muchos-a-muchos con Jugador)
+    @BelongsToMany(() => JugadorModel, () => PartidaJugadorModel)
+    declare jugadores: Array<JugadorModel & { PartidaJugadorModel: PartidaJugadorModel }>;
+
+
+    // Relación directa a la tabla de unión para acceder a los atributos de la unión
+    @HasMany(() => PartidaJugadorModel)
+    declare participaciones: PartidaJugadorModel[];
 
     @CreatedAt
     declare created_at: Date;

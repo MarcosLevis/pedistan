@@ -1,13 +1,16 @@
 import { Model, Column, Table, ForeignKey, DataType, CreatedAt, UpdatedAt, BelongsTo, PrimaryKey } from "sequelize-typescript";
 import UserModel from "./user.model"; 
 import LigaModel from "./liga.model";
+import { Optional } from "sequelize";
+import { ILigaAdministrador } from "../interfaces/liga_administrador.interface";
 
+interface LigaAdministradorCreationAttributes extends Optional<ILigaAdministrador,"id"> {}
 @Table({
     timestamps: true,
     tableName: "liga_administrador", // Nombre de la tabla intermedia
     modelName: "LigaAdministrador"
 })
-export default class LigaAdministradorModel extends Model {
+export default class LigaAdministradorModel extends Model<ILigaAdministrador, LigaAdministradorCreationAttributes>{
 
     @Column({ // ID propio para la entrada de la tabla de unión (opcional, pero común)
         primaryKey: true,
@@ -28,8 +31,6 @@ export default class LigaAdministradorModel extends Model {
         onDelete: "CASCADE" // Si se borra el usuario, se borra la admin.
     })
     user_id!: number;
-
-
 
     @BelongsTo(() => LigaModel)
     liga!: LigaModel;
